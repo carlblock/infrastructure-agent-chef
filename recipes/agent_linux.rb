@@ -51,7 +51,12 @@ end
 
 
 # Detect service provider
-service_provider = Chef::Provider::Service::Init
+if node['platform_family'] == 'rhel'
+  service_provider = Chef::Provider::Service::Upstart
+else
+  service_provider = Chef::Provider::Service::Systemd
+end
+
 
 
 # Install the newrelic-infra agent
